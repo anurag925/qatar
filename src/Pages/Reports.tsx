@@ -15,6 +15,10 @@ function Reports() {
     navigate('/');
   };
 
+  const goToMyInventory = () => {
+    navigate('/myinventory');
+  };
+
   return (
     <Box>
       <CssBaseline />
@@ -43,7 +47,7 @@ function Reports() {
           borderRadius: '20px'
         }}
       >
-        <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white', width: '80%', textTransform: 'none' }}>
+        <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white', width: '80%', textTransform: 'none' }} onClick={goToMyInventory}>
           My Inventory
         </Button>
         <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white', width: '80%', textTransform: 'none' }}>

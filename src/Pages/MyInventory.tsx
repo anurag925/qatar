@@ -8,12 +8,15 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { TextField, Grid, Button, Divider } from '@mui/material';
+import { TextField, Grid, Button, Divider, CssBaseline, IconButton } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useNavigate } from 'react-router-dom';
 
 const MyInventory: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [selectedButton, setSelectedButton] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     setSelectedMonth(event.target.value);
@@ -28,16 +31,24 @@ const MyInventory: React.FC = () => {
     }
   };
 
+  const goBack = () => {
+    navigate('/Reports');
+  };
+
   return (
     <Box style={{ textAlign: 'center' }}>
+      <CssBaseline />
       <AppBar position="static" style={{ backgroundColor: "#1a5435" }}>
-        <Toolbar style={{ justifyContent: 'center' }}>
-          <Typography variant="h6" align="center">
+        <Toolbar>
+          <IconButton aria-label="go back" sx={{ marginRight: '10%', color: 'white' }} onClick={goBack}>
+            <ArrowBackIosIcon />
+          </IconButton>
+          <Typography variant="h6" style={{ flex: 1, textAlign: 'left' }}>
             My Inventory
           </Typography>
         </Toolbar>
       </AppBar>
-      <Box 
+      <Box
         style={{
           backgroundColor: "rgb(59 245 59)",
           padding: '10px',
@@ -45,7 +56,7 @@ const MyInventory: React.FC = () => {
           margin: '20px auto',
           display: 'inline-block',
           borderRadius: '10px',
-          minWidth: '300px' 
+          minWidth: '300px'
         }}
       >
         <Typography variant="body1" >
@@ -66,7 +77,7 @@ const MyInventory: React.FC = () => {
         >
           <Card>
             <CardContent style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Typography variant="body1" style={{marginRight: '20px'}}>
+              <Typography variant="body1" style={{ marginRight: '20px' }}>
                 Current Month:
               </Typography>
               <Select
@@ -128,21 +139,21 @@ const MyInventory: React.FC = () => {
             <CardContent>
               <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                 <Typography variant="h6" style={{ marginRight: '20px' }}>Item: Coconut Oil</Typography>
-                </div>
-                <div>
+              </div>
+              <div>
                 {[100, 200, 500, 750, 1000].map((value, index) => (
-                  <Button 
+                  <Button
                     key={index}
-                    variant="contained" 
-                    style={{ 
-                      backgroundColor: selectedButton === index ? "#1a5435" : "white", 
-                      color: selectedButton === index ? "white" : "#1a5435", 
+                    variant="contained"
+                    style={{
+                      backgroundColor: selectedButton === index ? "#1a5435" : "white",
+                      color: selectedButton === index ? "white" : "#1a5435",
                       marginRight: '10px',
                       marginBottom: '10px',
                       width: '60px',
                       fontSize: '10px',
                       padding: '5px'
-                    }} 
+                    }}
                     onClick={() => handleButtonClick(index)}
                   >
                     {value} ml

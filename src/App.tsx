@@ -18,6 +18,7 @@ function App() {
         <Route path="/ManageUser" element={<ManageUser />} />
         <Route path="/StockTransfer" element={<StockTransfer />} />
         <Route path="/ManageContent" element={<ManageContent />} />
+        <Route path="/MyInventory" element={<MyInventory/>}/>
       </Routes>
     </Router>
   )
