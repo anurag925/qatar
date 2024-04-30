@@ -6,14 +6,20 @@ import Reports from "./Pages/Reports";
 import ManageUser from "./Pages/ManageUser";
 import StockTransfer from "./Pages/StockTransfer";
 import ManageContent from "./Pages/ManageContent";
+import { Login } from './Pages/Login';
+import { Root } from './Pages/Root';
+import { Otp } from './Pages/Otp';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Admin />} />
+        <Route path="/" element={<Root />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/otp" element={<Otp />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/register" element={<NewRegistration />} />
         <Route path="/MyInventory" element={<MyInventory />} />
-        <Route path="/NewRegistration" element={<NewRegistration />} />
         <Route path="/Reports" element={<Reports />} />
         <Route path="/ManageUser" element={<ManageUser />} />
         <Route path="/StockTransfer" element={<StockTransfer />} />

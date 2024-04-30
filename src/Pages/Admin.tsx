@@ -35,7 +35,7 @@ function Admin(): JSX.Element {
         }}
       >
         <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white', width:'80%',textTransform: 'none'}}>
-          <Link to="/NewRegistration" style={{ textDecoration: 'none', color: 'inherit' }}>New registration</Link>
+          <Link to="/register" style={{ textDecoration: 'none', color: 'inherit' }}>New registration</Link>
         </Button>
         <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white' , width:'80%',textTransform: 'none'}}>
           <Link to="/ManageContent" style={{ textDecoration: 'none', color: 'inherit' }}>Manage content</Link>
