@@ -44,7 +44,7 @@ function Admin(): JSX.Element {
           <Link to="/ManageUser" style={{ textDecoration: 'none', color: 'inherit' }}>Manage users</Link>
         </Button>
         <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white', width:'80%',textTransform: 'none' }}>
-          <Link to="/StockTransfer" style={{ textDecoration: 'none', color: 'inherit' }}>Stock transfer</Link>
+          <Link to="/stock-transfer-new" style={{ textDecoration: 'none', color: 'inherit' }}>Stock transfer</Link>
         </Button>
         <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white', width:'80%',textTransform: 'none'  }}>
           <Link to="/Reports" style={{ textDecoration: 'none', color: 'inherit' }}>My reports</Link>
