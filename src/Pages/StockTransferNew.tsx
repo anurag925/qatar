@@ -24,14 +24,14 @@ interface AreaDevelopmentOfficerDetails {
 }
 
 interface StockTransferFormData {
-  product_id: number
-  quantity: number
-  amount: number
-  aod_id: number
-  aod_index: number
-  monthly_target: number
-  total_quantity: number
-  total_amount: number
+  product_id: number | null
+  quantity: number | null
+  amount: number | null
+  aod_id: number | null
+  aod_index: number | null
+  monthly_target: number | null
+  total_quantity: number | null
+  total_amount: number | null
 }
 
 const StockTransferNew = () => {
@@ -39,18 +39,35 @@ const StockTransferNew = () => {
   const [areaDevelopmentOfficers, setAreaDevelopmentOfficers] = useState<Array<AreaDevelopmentOfficerDetails>>([]);
   const [selectedProduct, setSelectedProduct] = useState<ProductDetail>();
   const [selectedAod, setSelectedAod] = useState<AreaDevelopmentOfficerDetails>();
-  const [formData, setFormData] = useState<StockTransferFormData>();
+  const [formData, setFormData] = useState<StockTransferFormData>({
+    amount: null,
+    aod_id: null,
+    aod_index: null,
+    monthly_target: null,
+    product_id: null,
+    quantity: null,
+    total_amount: null,
+    total_quantity: null
+  });
 
   const handleChangeProduct = (product: ProductDetail) => {
     setSelectedProduct(product);
+    formData.product_id = product.product_id
+    setFormData(formData)
   };
 
   const handleChangeAod = (aod: AreaDevelopmentOfficerDetails) => {
     setSelectedAod(aod);
+    formData.aod_id = aod.id
+    setFormData(formData)
   };
 
-  const handleChangeAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setAmount(event.target.value);
+  const handleFromDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   useEffect(() => {
@@ -75,18 +92,18 @@ const StockTransferNew = () => {
         </AppTextField>
         <AppTextField label="Price" value={selectedProduct?.price} focused contentEditable/>
         <Box display={'flex'} justifyContent={'space-between'}>
-          <AppTextField label="Quantity" value={formData?.quantity} onChange={handleChangeAmount} style={{ width: '48%', }} />
-          <AppTextField label="Amount" value={formData?.amount} onChange={handleChangeAmount} style={{ width: '48%', }} />
+          <AppTextField name="quantity" label="Quantity" value={formData?.quantity} onChange={handleFromDataChange} style={{ width: '48%', }} />
+          <AppTextField name="amount" label="Amount" value={formData?.amount} onChange={handleFromDataChange} style={{ width: '48%', }} />
         </Box>
         <AppTextField select label="Select ADO" value={selectedAod?.name}>
           {areaDevelopmentOfficers.map((aod) => (
             <MenuItem key={aod.id} value={aod.name} onClick={()=> handleChangeAod(aod)}>{aod.name}</MenuItem>
           ))}
         </AppTextField>
-        <AppTextField label="Set Monthly Target" value={formData?.monthly_target}/>
+        <AppTextField name="monthly_target" label="Set Monthly Target" value={formData?.monthly_target} onChange={handleFromDataChange}/>
         <Box display={'flex'} justifyContent={'space-between'}>
-          <AppTextField contentEditable={false} label="Total Qty" value={formData?.total_quantity} style={{ width: '48%', }} />
-          <AppTextField label="Total Amt" value={formData?.total_amount} style={{ width: '48%', }} />
+          <AppTextField name="total_quantity" contentEditable={false} label="Total Qty" value={formData?.total_quantity} style={{ width: '48%', }} />
+          <AppTextField name="total_amount" label="Total Amt" value={formData?.total_amount} style={{ width: '48%', }} />
         </Box>
       </FormBackground>
       <AppButton style={{ margin: 'auto', marginTop: '10px', width: '80%' }}>Transfer</AppButton>
