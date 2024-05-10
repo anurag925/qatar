@@ -34,7 +34,7 @@ function ManageContent(): JSX.Element {
   };
 
   const goBack = () => {
-    navigate('/');
+    navigate('/Admin');
   };
 
   return (

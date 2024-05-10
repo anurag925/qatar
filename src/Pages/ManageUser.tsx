@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,41 +16,37 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { IconButton, CssBaseline } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
+import { callApi } from "../services/api_caller";
+import { userDetails } from "../helpers/apis";
 
 interface User {
   name: string;
-  registerNo: string;
+  registration_no: string;
   dob: string;
-  createdDate: string;
+  created_at: string;
   status: string;
 }
 
-const users: User[] = [
-  {
-    name: 'ABC',
-    registerNo: '02_1236',
-    dob: '12-07-2000',
-    createdDate: '12-07-2024',
-    status: 'Active'
-  },
-  {
-    name: 'XYZ',
-    registerNo: '02_1236',
-    dob: '12-07-1985',
-    createdDate: '12-07-2024',
-    status: 'Inactive'
-  }
-];
-
 const ManageUser: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [filteredUsers, setFilteredUsers] = useState<User[]>(users);
+  const [users, setUsers] = useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [editIndex, setEditIndex] = useState<number>(-1);
-  const [editData, setEditData] = useState<User>({ name: '', registerNo: '', dob: '', createdDate: '', status: '' });
+  const [editData, setEditData] = useState<User>({ name: '', registration_no: '', dob: '', created_at: '', status: '' });
   const navigate = useNavigate();
 
+  useEffect(() => {
+    callAndSetUserDetails();
+  }, []);
+
+  const callAndSetUserDetails = async () => {
+    const userApiResponse = await callApi('GET', userDetails);
+    setUsers(userApiResponse?.data);
+    setFilteredUsers(userApiResponse?.data);
+  };
+
   const handleSearch = () => {
-    const filtered = users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filtered = users.filter(user => user.name);
     setFilteredUsers(filtered);
   };
 
@@ -70,12 +66,12 @@ const ManageUser: React.FC = () => {
     updatedUsers[editIndex] = editData;
     setFilteredUsers(updatedUsers);
     setEditIndex(-1);
-    setEditData({ name: '', registerNo: '', dob: '', createdDate: '', status: '' });
+    setEditData({ name: '', registration_no: '', dob: '', created_at: '', status: '' });
   };
 
   const handleCancel = () => {
     setEditIndex(-1);
-    setEditData({ name: '', registerNo: '', dob: '', createdDate: '', status: '' });
+    setEditData({ name: '', registration_no: '', dob: '', created_at: '', status: '' });
   };
 
   const handleDelete = (index: number) => {
@@ -85,12 +81,12 @@ const ManageUser: React.FC = () => {
 
   const handleActivate = (index: number) => {
     const updatedUsers = [...filteredUsers];
-    updatedUsers[index].status = 'Active';
+    updatedUsers[index].status = 'verified';
     setFilteredUsers(updatedUsers);
   };
 
   const goBack = () => {
-    navigate('/');
+    navigate('/admin');
   };
 
   return (
@@ -112,6 +108,7 @@ const ManageUser: React.FC = () => {
           size="small"
           placeholder="Search name"
           style={{ width: '300px' }}
+          value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyPress={handleKeyPress}
           InputProps={{
@@ -158,8 +155,8 @@ const ManageUser: React.FC = () => {
                         />
                         <TextField
                           label="Register No."
-                          value={editData.registerNo}
-                          onChange={(e) => setEditData({ ...editData, registerNo: e.target.value })}
+                          value={editData.registration_no}
+                          onChange={(e) => setEditData({ ...editData, registration_no: e.target.value })}
                           fullWidth
                           style={{ marginBottom: '10px' }}
                         />
@@ -172,8 +169,8 @@ const ManageUser: React.FC = () => {
                         />
                         <TextField
                           label="Created Date"
-                          value={editData.createdDate}
-                          onChange={(e) => setEditData({ ...editData, createdDate: e.target.value })}
+                          value={editData.created_at}
+                          onChange={(e) => setEditData({ ...editData, created_at: e.target.value })}
                           fullWidth
                           style={{ marginBottom: '10px' }}
                         />
@@ -188,16 +185,16 @@ const ManageUser: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <Typography >Name: {user.name}</Typography>
-                        <Typography>Register No: {user.registerNo}</Typography>
+                        <Typography >Name: {user?.name}</Typography>
+                        <Typography>Register No: {user?.registration_no}</Typography>
                         <Typography>DOB: {user.dob}</Typography>
-                        <Typography>Created Date: {user.createdDate}</Typography>
+                        <Typography>Created Date: {user?.created_at}</Typography>
                         <span
                           style={{
                             position: 'absolute',
                             top: '10px',
                             right: '10px',
-                            backgroundColor: user.status === 'Active' ? 'green' : 'lightcoral',
+                            backgroundColor: user.status === 'verified' ? 'green' : 'lightcoral',
                             color: 'white',
                             padding: '5px',
                             borderRadius: '5px'
@@ -205,14 +202,14 @@ const ManageUser: React.FC = () => {
                         >
                           {user.status}
                         </span>
-                        {user.status === "Inactive" && (
+                        {user.status === "created" && (
                           <Button
                             variant="contained"
                             color="primary"
                             onClick={() => handleActivate(index)}
                             style={{ position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)' }}
                           >
-                            Activate
+                            Verify
                           </Button>
                         )}
                       </>

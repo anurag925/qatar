@@ -1,32 +1,37 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Admin from "./pages/Admin";
-import MyInventory from "./pages/MyInventory";
-import NewRegistration from "./pages/NewRegestration";
-import Reports from "./pages/Reports";
-import ManageUser from "./pages/ManageUser";
-import StockTransfer from "./pages/StockTransfer";
-import ManageContent from "./pages/ManageContent";
-import { Login } from './pages/Login';
-import { Root } from './pages/Root';
-import { Otp } from './pages/Otp';
-import StockTransferNew from './pages/StockTransferNew';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Admin from "./Pages/Admin";
+import MyInventory from "./Pages/MyInventory";
+import NewRegistration from "./Pages/NewRegestration";
+import Reports from "./Pages/Reports";
+import ManageUser from "./Pages/ManageUser";
+import ManageContent from "./Pages/ManageContent";
+import { Login } from './Pages/Login';
+import { Root } from './Pages/Root';
+import { Otp } from './Pages/Otp';
+import StockTransferNew from './Pages/StockTransferNew';
 
 function App() {
+  const token = localStorage.getItem('user_token');
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Root />} />
         <Route path="/login" element={<Login />} />
         <Route path="/otp" element={<Otp />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/register" element={<NewRegistration />} />
-        <Route path="/MyInventory" element={<MyInventory />} />
-        <Route path="/Reports" element={<Reports />} />
-        <Route path="/ManageUser" element={<ManageUser />} />
-        <Route path="/stock-transfer" element={<StockTransfer />} />
-        <Route path="/stock-transfer-new" element={<StockTransferNew />} />
-        <Route path="/ManageContent" element={<ManageContent />} />
-        <Route path="/MyInventory" element={<MyInventory/>}/>
+        {token ? (
+          <>
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/register" element={<NewRegistration />} />
+            <Route path="/myinventory" element={<MyInventory />} /> 
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/manageUser" element={<ManageUser />} />
+            <Route path="/stock-transfer-new" element={<StockTransferNew />} />
+            <Route path="/manageContent" element={<ManageContent />} /> 
+          </>
+        ) : (
+          <Route path="/" element={<Root />} />
+        )}
       </Routes>
     </Router>
   )
