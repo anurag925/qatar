@@ -12,7 +12,7 @@ function Reports() {
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate('/');
+    navigate('/admin');
   };
 
   const goToMyInventory = () => {

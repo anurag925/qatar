@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,10 +13,28 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useNavigate } from 'react-router-dom';
 
+import { salesDetails } from '../helpers/apis';
+
 const MyInventory: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [selectedButton, setSelectedButton] = useState<number | null>(null);
+  const [salesData, setSalesData] = useState<any[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch sales data from the API
+    const fetchSalesData = async () => {
+      try {
+        const response = await fetch(salesDetails);
+        const data = await response.json();
+        setSalesData(data);
+      } catch (error) {
+        console.error('Error fetching sales data:', error);
+      }
+    };
+
+    fetchSalesData();
+  }, []);
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     setSelectedMonth(event.target.value);
@@ -161,7 +179,7 @@ const MyInventory: React.FC = () => {
                 ))}
               </div>
               <Divider />
-              <Typography style={{ textAlign: 'left' }}>Sales Qty: 100</Typography>
+              <Typography style={{ textAlign: 'left' }}>Sales Qty: {salesData.length}</Typography>
               <Typography style={{ textAlign: 'left' }}>Amount: $2500</Typography>
               <Typography style={{ textAlign: 'left' }}>Balance:</Typography>
             </CardContent>

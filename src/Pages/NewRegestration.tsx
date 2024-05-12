@@ -63,7 +63,7 @@ const NewRegistration: React.FC = () => {
   };
 
   const goBack = () => {
-    navigate("/");
+    navigate("/Admin");
   };
 
   return (

@@ -38,16 +38,16 @@ function Admin(): JSX.Element {
           <Link to="/register" style={{ textDecoration: 'none', color: 'inherit' }}>New registration</Link>
         </Button>
         <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white' , width:'80%',textTransform: 'none'}}>
-          <Link to="/ManageContent" style={{ textDecoration: 'none', color: 'inherit' }}>Manage content</Link>
+          <Link to="/manageContent" style={{ textDecoration: 'none', color: 'inherit' }}>Manage content</Link>
         </Button>
         <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white', width:'80%',textTransform: 'none' }}>
-          <Link to="/ManageUser" style={{ textDecoration: 'none', color: 'inherit' }}>Manage users</Link>
+          <Link to="/manageUser" style={{ textDecoration: 'none', color: 'inherit' }}>Manage users</Link>
         </Button>
         <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white', width:'80%',textTransform: 'none' }}>
           <Link to="/stock-transfer-new" style={{ textDecoration: 'none', color: 'inherit' }}>Stock transfer</Link>
         </Button>
         <Button variant="contained" style={{ margin: '15px', color: 'black', backgroundColor: 'white', width:'80%',textTransform: 'none'  }}>
-          <Link to="/Reports" style={{ textDecoration: 'none', color: 'inherit' }}>My reports</Link>
+          <Link to="/reports" style={{ textDecoration: 'none', color: 'inherit' }}>My reports</Link>
         </Button>
       </Paper>
     </Box>
